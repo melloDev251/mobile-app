@@ -24,7 +24,16 @@ export default function App() {
     <>
       <NavigationContainer>
         <Drawer.Navigator>
-          <Drawer.Screen name="Screen_A" component={ScreenA} />
+          <Drawer.Screen
+            name="Screen_A"
+            component={ScreenA}
+            options={{
+              title: "Ecran A",
+              drawerIcon: ({ focused }) => (
+                <FontAwesome5 name="btc" size={focused ? 25 : 20} color={focused ? "red" : "blue"} />
+              ),
+            }}
+          />
           <Drawer.Screen name="Screen_B" component={ScreenB} />
         </Drawer.Navigator>
       </NavigationContainer>
