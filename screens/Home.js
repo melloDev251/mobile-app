@@ -92,10 +92,9 @@ export default function Home({ navigation, route }) {
         keyExtractor={(item, index) => index.toString()}
         data={cities}
         renderItem={({ item }) => (
-          <View>
-            <Text>
-              {item.country} is cities in --&gt; {item.city}
-            </Text>
+          <View style={{ borderWidth: 2, margin: 7, width: 200, alignItems:"center" }}>
+            <Text>{item.country}</Text>
+            <Text>{item.city}</Text>
           </View>
         )}
       />
