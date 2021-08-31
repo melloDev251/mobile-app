@@ -14,6 +14,8 @@ import ScreenB from "./screens/ScreenB";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Login from "./screens/Login";
 import Home from "./screens/Home";
+import { Provider } from "react-redux";
+import { Store } from "./redux/Store";
 
 const Stack = createStackNavigator();
 // const Tab = createBottomTabNavigator();
@@ -24,28 +26,30 @@ const Stack = createStackNavigator();
 export default function App() {
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="Login"
-          screenOptions={{
-            headerTitleAlign: "center",
-            headerStyle: {
-              backgroundColor: "#0080ff",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: { fontSize: 30, fontWeight: "bold" },
-          }}
-        >
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              headerShown: false,
+      <Provider store={Store} >
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+              headerTitleAlign: "center",
+              headerStyle: {
+                backgroundColor: "#0080ff",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: { fontSize: 30, fontWeight: "bold" },
             }}
-          />
-          <Stack.Screen name="Home" component={Home} />
-        </Stack.Navigator>
-      </NavigationContainer>
+          >
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen name="Home" component={Home} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
     </>
   );
 }

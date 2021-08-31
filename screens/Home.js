@@ -1,15 +1,28 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState, useEffect } from "react";
-import { Pressable, View, Text, StyleSheet, Alert } from "react-native";
+import {
+  Pressable,
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+  FlatList,
+} from "react-native";
+import { incrustAge, setAge, getCities } from "../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
 import { GlobalButton } from "../utils/GlobalButton";
 import { GlobalTextInput } from "../utils/GlobalTextInput";
 
 export default function Home({ navigation, route }) {
   const [name, setName] = useState("");
-  const [age, setAge] = useState("");
+  // const [age, setAge] = useState("");
+
+  const { age, cities } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getData();
+    dispatch(getCities());
   }, []);
 
   const getData = () => {
@@ -18,7 +31,8 @@ export default function Home({ navigation, route }) {
         if (value != null) {
           let user = JSON.parse(value);
           setName(user.Name);
-          setAge(user.Age);
+          // setAge(user.Age);
+          dispatch(setAge(age));
         }
       });
     } catch (error) {
@@ -57,16 +71,33 @@ export default function Home({ navigation, route }) {
       <Text style={{ marginBottom: 20, marginTop: 20 }}>
         Welcome {name} ! Your age is {age}{" "}
       </Text>
-      <GlobalTextInput value={name} onChangeText={(value) => setName(value)} />
+      {/* <GlobalTextInput value={name} onChangeText={(value) => setName(value)} />
       <GlobalButton
         title="Update"
-        onPressFunction={updateData}
+        onPressFunction={updateData} 
         backgroundColor={"orange"}
       />
       <GlobalButton
         title="Delete"
         onPressFunction={removeData}
         backgroundColor={"red"}
+      />
+      <GlobalButton
+        title="Increase Age -"
+        onPressFunction={()=>{dispatch(incrustAge())}}
+        backgroundColor={"black"}
+      /> */}
+
+      <FlatList
+        keyExtractor={(item, index) => index.toString()}
+        data={cities}
+        renderItem={({ item }) => (
+          <View>
+            <Text>
+              {item.country} is cities in --&gt; {item.city}
+            </Text>
+          </View>
+        )}
       />
     </View>
   );

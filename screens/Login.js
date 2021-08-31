@@ -12,9 +12,15 @@ import {
 import { GlobalButton } from "../utils/GlobalButton";
 import { GlobalTextInput } from "../utils/GlobalTextInput";
 
+import { incrustAge, setAge } from "../redux/actions";
+import { useSelector, useDispatch } from "react-redux";
+
 export default function Login({ navigation }) {
   const [name, setName] = useState("");
-  const [age, setAge] = useState("");
+  // const [age, setAge] = useState("");
+
+  const { age } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getData();
@@ -37,6 +43,8 @@ export default function Login({ navigation }) {
       Alert.alert("Warning! Please write your data");
     } else {
       try {
+        dispatch(setAge(age))
+
         var user = {
           Name:name,
           Age:age
@@ -65,7 +73,7 @@ export default function Login({ navigation }) {
       />
 
       <GlobalTextInput
-        onChangeText={(value) => setAge(value)}
+        onChangeText={(value) => dispatch(setAge(value))}
         placeholder={"Enter age"}
       />
 
